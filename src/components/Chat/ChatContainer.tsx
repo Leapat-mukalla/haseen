@@ -8,13 +8,16 @@ import { ErrorMessage } from './ErrorMessage';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 export function ChatContainer() {
-  const { currentSession, sendMessage, createNewSession, isLoading, error } = useChatStore();
+  const { currentSession, sendMessage, createNewSession, isLoading, error, hydrateFromStorage, hasHydrated } = useChatStore();
   const [lastMessage, setLastMessage] = useState<string>();
   const [inputLength, setInputLength] = useState(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
-
-
+  // Hydrate persisted sessions on client after mount
+  useEffect(() => {
+    hydrateFromStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {
@@ -63,7 +66,7 @@ export function ChatContainer() {
 
       {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4" dir="rtl">
-        {currentSession?.messages.map((message) => (
+        {(hasHydrated ? currentSession?.messages : [])?.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
         {isLoading && <TypingIndicator />}

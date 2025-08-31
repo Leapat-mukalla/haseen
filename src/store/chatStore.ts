@@ -20,8 +20,10 @@ interface ChatStore {
   sessions: ChatSession[];
   isLoading: boolean;
   error: string | null;
+  hasHydrated: boolean;
   sendMessage: (content: string) => Promise<void>;
   createNewSession: () => void;
+  hydrateFromStorage: () => void;
 }
 
 const STORAGE_KEY = 'haseen-chat-sessions';
@@ -39,17 +41,27 @@ const saveSessionsToStorage = (sessions: ChatSession[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
 };
 
-// Initialize state with stored sessions
-const storedSessions = loadSessionsFromStorage();
+// Initial state (avoid reading localStorage during SSR/module eval)
 const initialState = {
-  currentSession: storedSessions.length > 0 ? storedSessions[0] : null,
-  sessions: storedSessions,
+  currentSession: null as ChatSession | null,
+  sessions: [] as ChatSession[],
   isLoading: false,
-  error: null,
+  error: null as string | null,
+  hasHydrated: false,
 };
 
 export const useChatStore = create<ChatStore>((set, get) => ({
   ...initialState,
+
+  hydrateFromStorage: () => {
+    // Only run on client
+    const sessionsFromStorage = loadSessionsFromStorage();
+    set({
+      sessions: sessionsFromStorage,
+      currentSession: sessionsFromStorage.length > 0 ? sessionsFromStorage[0] : null,
+      hasHydrated: true,
+    });
+  },
 
   sendMessage: async (content: string) => {
     try {
