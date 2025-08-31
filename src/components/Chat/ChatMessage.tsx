@@ -3,6 +3,7 @@
 import { Message } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
+import type { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 interface ChatMessageProps {
@@ -28,13 +29,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <p className="text-sm whitespace-pre-wrap">{message.content}</p>
         ) : (
           <div className="markdown-body text-sm">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                // Style code blocks
-                code: ({ node, inline, className, children, ...props }) => {
+            {(() => {
+              const components: Components = {
+                code: ({ className, children, ...props }) => {
                   const match = /language-(\w+)/.exec(className || '');
-                  return !inline ? (
+                  const isBlock = Boolean(match);
+                  return isBlock ? (
                     <pre className="bg-gray-900 dark:bg-black rounded-md p-2 my-2 overflow-x-auto">
                       <code
                         className={cn(
@@ -52,8 +52,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     </code>
                   );
                 },
-                // Style links
-                a: ({ node, children, href, ...props }) => (
+                a: ({ children, href, ...props }) => (
                   <a
                     href={href}
                     className="text-blue-500 hover:underline"
@@ -64,41 +63,37 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     {children}
                   </a>
                 ),
-                // Style lists
-                ul: ({ node, children, ...props }) => (
+                ul: ({ children, ...props }) => (
                   <ul className="list-disc list-inside my-2" {...props}>
                     {children}
                   </ul>
                 ),
-                ol: ({ node, children, ...props }) => (
+                ol: ({ children, ...props }) => (
                   <ol className="list-decimal list-inside my-2" {...props}>
                     {children}
                   </ol>
                 ),
-                // Style headings
-                h1: ({ node, children, ...props }) => (
+                h1: ({ children, ...props }) => (
                   <h1 className="text-xl font-bold my-3" {...props}>
                     {children}
                   </h1>
                 ),
-                h2: ({ node, children, ...props }) => (
+                h2: ({ children, ...props }) => (
                   <h2 className="text-lg font-bold my-2" {...props}>
                     {children}
                   </h2>
                 ),
-                h3: ({ node, children, ...props }) => (
+                h3: ({ children, ...props }) => (
                   <h3 className="text-base font-bold my-2" {...props}>
                     {children}
                   </h3>
                 ),
-                // Style paragraphs
-                p: ({ node, children, ...props }) => (
+                p: ({ children, ...props }) => (
                   <p className="my-2" {...props}>
                     {children}
                   </p>
                 ),
-                // Style blockquotes
-                blockquote: ({ node, children, ...props }) => (
+                blockquote: ({ children, ...props }) => (
                   <blockquote
                     className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-2 italic"
                     {...props}
@@ -106,10 +101,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     {children}
                   </blockquote>
                 ),
-              }}
-            >
-              {message.content}
-            </ReactMarkdown>
+              };
+              return (
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+                  {message.content}
+                </ReactMarkdown>
+              );
+            })()}
           </div>
         )}
         </div>

@@ -23,11 +23,14 @@ export function ChatContainer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const content = inputRef.current?.value.trim();
+    const inputElement = inputRef.current;
+    const content = inputElement?.value.trim();
     if (!content || isLoading) return;
 
     setLastMessage(content);
-    inputRef.current.value = '';
+    if (inputElement) {
+      inputElement.value = '';
+    }
     setInputLength(0);
     await sendMessage(content);
   };
