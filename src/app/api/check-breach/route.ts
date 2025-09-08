@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       )}`,
       {
         headers: {
-          "hibp-api-key": "d08701c2d30645e4924b85f98a5b70e4",
+          "hibp-api-key": process.env.HIBP_API_KEY || "",
           "User-Agent": "HaseeApp/1.0",
         },
       }
