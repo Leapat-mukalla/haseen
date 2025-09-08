@@ -95,9 +95,6 @@ export async function getBlogs() {
 }
 
 export default async function getProject(file: string) {
-  const fs = require("fs");
-  const path = require("path");
-
   const directoryPath = path.join(process.cwd(), "src", "content", "projects");
   const filePath = path.join(directoryPath, file + ".md");
   const fileContent: string = fs.readFileSync(filePath, "utf8");
@@ -107,9 +104,6 @@ export default async function getProject(file: string) {
 }
 
 export async function getBlog(file: string) {
-  const fs = require("fs");
-  const path = require("path");
-
   const directoryPath = path.join(process.cwd(), "src", "content", "blog");
   const filePath = path.join(directoryPath, file + ".md");
   const fileContent: string = fs.readFileSync(filePath, "utf8");

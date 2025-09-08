@@ -1,5 +1,4 @@
-import { ArrowRight, ChevronLeft, Search } from "lucide-react";
-
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,7 +15,7 @@ export default function NoResults({
   message = "لم يتم العثور على نتائج تطابق بحثك. حاول استخدام كلمات بحث أخرى",
   buttonText = "عودة لقائمة المقالات",
   buttonHref = "/blog",
-  searchQuery,
+  // searchQuery,
 }: NoResultsProps) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center py-20">

@@ -1,18 +1,14 @@
-import { ArrowLeft, Calendar, Clock, Tag, User } from "lucide-react";
 import { getBlog, getBlogs } from "@/lib/markdown";
 
-import BlogCard from "@/components/blog/BlogCard";
 import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import RelatedBlogCard from "@/components/blog/RelatedBlogCard";
 import { notFound } from "next/navigation";
 
 interface BlogDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -23,16 +19,17 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+  const resolvedParams = await params;
   let blog;
   try {
-    blog = await getBlog(params.id);
-  } catch (error) {
+    blog = await getBlog(resolvedParams.id);
+  } catch {
     notFound();
   }
 
   const allBlogs = await getBlogs();
   const relatedBlogs = allBlogs
-    .filter((b) => b.filePath !== params.id)
+    .filter((b) => b.filePath !== resolvedParams.id)
     .slice(0, 3);
 
   const formatDate = (dateString: string) => {

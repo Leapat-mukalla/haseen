@@ -1,4 +1,3 @@
-import { HeroSection } from '@/components/hero-section'
 import { Metadata } from 'next'
 import React from 'react'
 

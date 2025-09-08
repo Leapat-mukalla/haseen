@@ -1,4 +1,3 @@
-import BlogSearchForm from "@/components/blog/BlogSearchForm";
 import BlogShowSection from "@/components/blog/BlogShowSection";
 import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm";
 import React from "react";
@@ -6,14 +5,15 @@ import { cn } from "@/lib/utils";
 import { getBlogs } from "@/lib/markdown";
 
 interface BlogPageProps {
-  searchParams: {
+  searchParams: Promise<{
     search?: string;
-  };
+  }>;
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allBlogs = await getBlogs();
-  const searchQuery = searchParams.search?.toLowerCase().trim();
+  const resolvedSearchParams = await searchParams;
+  const searchQuery = resolvedSearchParams.search?.toLowerCase().trim();
 
   const filteredBlogs = searchQuery
     ? allBlogs.filter(
@@ -49,7 +49,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <BlogShowSection
         blogs={filteredBlogs}
         searchQuery={searchQuery}
-        searchParams={searchParams}
+        searchParams={resolvedSearchParams}
       />
     </>
   );
