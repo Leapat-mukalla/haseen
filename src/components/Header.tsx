@@ -7,13 +7,19 @@ export function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-center gap-4">
           {/* Leapat Logo */}
-          <Image
-            src="/leapat-white.png"
-            width={120}
-            height={30}
-            alt="Leapat Logo"
-            className="h-8 w-auto"
-          />
+          <a
+            href="https://leapat.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/leapat-white.png"
+              width={120}
+              height={30}
+              alt="Leapat Logo"
+              className="h-8 w-auto"
+            />
+          </a>
 
           {/* Separator */}
           <div className="h-8 w-px bg-white/30"></div>

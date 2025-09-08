@@ -1,6 +1,7 @@
 import BlogCard from "@/components/blog/BlogCard";
 import { BlogMatter } from "@/lib/markdown";
 import NoResults from "@/components/NoResults";
+import { cn } from "@/lib/utils";
 
 interface BlogShowSectionProps {
   blogs: BlogMatter[];
@@ -16,7 +17,21 @@ export default function BlogShowSection({
   searchParams,
 }: BlogShowSectionProps) {
   return (
-    <section className="bg-background py-20">
+    <section className="bg-background py-16">
+      <div className="text-center mb-12">
+        <h2
+          className={cn(
+            "mt-18 flex items-end justify-center gap-2 mb-4 text-3xl lg:text-5xl text-primary"
+          )}
+        >
+          ثقف نفسك أكثر
+          <span className="mb-2 inline-block h-[9px] lg:w-[370px] rounded bg-primary"></span>
+        </h2>
+        <h3 className="mb-12 text-center text-4xl lg:text-6xl font-bold text-[#262626]">
+          تعرف أكثر عن الأمان الرقمي
+        </h3>
+      </div>
+
       <div className="mx-auto max-w-[1100px]">
         {searchQuery && (
           <div className="mb-8 text-center">
