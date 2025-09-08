@@ -1,8 +1,12 @@
+import BlogShowSection from "@/components/blog/BlogShowSection";
 import { FloatingChat } from "@/components/Chat/FloatingChat";
 import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm";
 import { cn } from "@/lib/utils";
+import { getBlogs } from "@/lib/markdown";
 
-export default function Home() {
+export default async function Home() {
+    const allBlogs = await getBlogs();
+
   return (
     <main dir="rtl" className="min-h-screen bg-white">
       <HeroSectionWithPwnedForm />
@@ -151,6 +155,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+      
+      <BlogShowSection
+        blogs={allBlogs}
+      />
       <FloatingChat />
     </main>
   );
