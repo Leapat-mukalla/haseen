@@ -59,9 +59,9 @@ export function HeroSectionWithPwnedForm() {
   return (
     <>
       <Header />
-      <section className="bg-custom-gradient min-h-screen relative">
+      <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
-        <div className="container mx-auto flex flex-col items-center justify-center py-40 lg:pt-60 2xl:pt-80 relative z-10">
+        <div className="container mx-auto flex flex-col items-center justify-center py-32 lg:pt-60 2xl:pt-80 relative z-10">
           <div className="max-w-md w-full mt-8 backdrop-blur-md bg-white/5 border border-white/20 rounded-lg shadow-lg">
             <div className="flex flex-col space-y-1.5 p-6">
               <div className="text-2xl font-semibold leading-none tracking-tight text-white text-right">

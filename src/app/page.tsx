@@ -1,5 +1,4 @@
 import BlogShowSection from "@/components/blog/BlogShowSection";
-import { FloatingChat } from "@/components/Chat/FloatingChat";
 import Footer from "@/components/Footer";
 import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm";
 import { cn } from "@/lib/utils";
@@ -159,7 +158,6 @@ export default async function Home() {
 
       <BlogShowSection blogs={allBlogs} />
       <Footer />
-      <FloatingChat />
     </main>
   );
 }

@@ -13,7 +13,7 @@ const prefilledQuestions = [
 ];
 
 export function FloatingChat() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [prefill, setPrefill] = useState<string | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const chatPanelRef = useRef<HTMLDivElement>(null);
