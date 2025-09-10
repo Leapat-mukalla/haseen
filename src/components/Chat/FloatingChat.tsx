@@ -13,7 +13,9 @@ const prefilledQuestions = [
 ];
 
 export function FloatingChat() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(
+    () => typeof window !== "undefined" && window.innerWidth > 768
+  );
   const [prefill, setPrefill] = useState<string | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const chatPanelRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,8 @@ export function FloatingChat() {
       }
     }, 100);
   };
+
+  if (typeof window === "undefined") return null;
 
   return (
     <>

@@ -17,7 +17,7 @@ export default function BlogShowSection({
   searchParams,
 }: BlogShowSectionProps) {
   return (
-    <section className="bg-background py-16">
+    <section className="bg-background px-6 py-16">
       <div className="text-center mb-12">
         <h2
           className={cn(
