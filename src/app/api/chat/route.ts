@@ -66,6 +66,15 @@ function cosineSim(a: number[], b: number[]) {
   return dot / (Math.sqrt(na) * Math.sqrt(nb));
 }
 
+function sanitizeIncomingMessages(messages: ChatMessage[]): ChatMessage[] {
+  return messages
+    .filter(
+      (m) =>
+        m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string'
+    )
+    .map((m) => ({ role: m.role, content: m.content }));
+}
+
 function detectArabic(text: string) {
   return /[\u0600-\u06FF]/.test(text);
 }
@@ -146,7 +155,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 });
     }
 
-    const lastUser = [...messages].reverse().find(m => m.role === 'user');
+    const sanitizedMessages = sanitizeIncomingMessages(messages);
+
+    const lastUser = [...sanitizedMessages].reverse().find(m => m.role === 'user');
     const lastUserText = lastUser?.content ?? '';
 
     const allowed = await isAllowedTopic(lastUserText);
@@ -156,7 +167,7 @@ export async function POST(req: Request) {
 
     const conversationWithSystem: ChatMessage[] = [
       { role: 'system', content: SYSTEM_MESSAGE },
-      ...messages,
+      ...sanitizedMessages,
     ];
 
     const completion = await openai.chat.completions.create({
