@@ -18,7 +18,7 @@ export default function Footer() {
 
           <div className="border-t border-gray-700 pt-6">
             <p className="text-sm text-gray-400">
-              © {currentYear} حسين. جميع الحقوق محفوظة.
+              © {currentYear} حصين. جميع الحقوق محفوظة.
             </p>
             <p className="text-xs text-gray-500 mt-2">
               تم التطوير بواسطة فريق ليبات - المكلا
