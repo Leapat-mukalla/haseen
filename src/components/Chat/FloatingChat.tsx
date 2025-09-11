@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChatContainer } from '@/components/Chat/ChatContainer';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
 import { Bot } from "lucide-react";
@@ -13,12 +13,33 @@ const prefilledQuestions = [
 ];
 
 export function FloatingChat() {
-  const [open, setOpen] = useState(
-    () => typeof window !== "undefined" && window.innerWidth > 768
-  );
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
   const [prefill, setPrefill] = useState<string | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
   const chatPanelRef = useRef<HTMLDivElement>(null);
+
+  // Handle mounting and tooltip effect
+  useEffect(() => {
+    setMounted(true);
+    
+    if (typeof window !== 'undefined') {
+      // Handle tooltip timing
+      const showTimer = setTimeout(() => {
+        setShowTooltip(true);
+      }, 3000);
+
+      const hideTimer = setTimeout(() => {
+        setShowTooltip(false);
+      }, 8000); // 3s delay + 5s display = 8s total
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, []);
 
   const handlePrefill = (question: string) => {
     setOpen(true);
@@ -36,18 +57,25 @@ export function FloatingChat() {
     }, 100);
   };
 
-  if (typeof window === "undefined") return null;
+  if (!mounted) return null;
 
   return (
     <>
       {/* Floating Button */}
-      <button
-        className="fixed bottom-6 right-6 z-50 hover:bg-custom-gradient bg-primary text-white rounded-full p-4 shadow-lg transition-colors"
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Open chat"
-      >
-        <Bot className="w-7 h-7" />
-      </button>
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <button
+          className="hover:bg-custom-gradient bg-primary text-white rounded-full p-4 shadow-lg transition-colors relative z-20"
+          onClick={() => setOpen(prev => !prev)}
+          aria-label="Open chat"
+        >
+          <Bot className="w-7 h-7" />
+        </button>
+        {showTooltip && (
+          <div className="max-w-[75vw] sm:max-w-xs md:max-w-sm whitespace-normal break-words px-4 py-2 rounded-3xl rounded-tr-none rounded-br-none shadow-lg animate-fade-in bg-blue-50 text-primary mr-[-30px] relative z-10">
+            <div className="pr-4 text-sm sm:text-base leading-snug">مرحباً 👋🏻 أنا هنا لمساعدتك، تفضل بطرح سؤالك</div>
+          </div>
+        )}
+      </div>
 
       {/* Chat Panel */}
       {open && (
