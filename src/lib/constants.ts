@@ -6,7 +6,7 @@ export const links = [
   {
     id: 2,
     title: "من نحن؟",
-    url: "/#about",
+    url: "http://leapat.org/about",
   },
   {
     title: "المشاريع",
@@ -36,7 +36,7 @@ export const links = [
   {
     id: 6,
     title: "اتصل بنا",
-    url: "/#contact",
+    url: "http://leapat.org/contact",
   },
 ];
 
