@@ -132,8 +132,8 @@ export function HeroSectionWithPwnedForm() {
         
         </div>
 
-        <div className="container mx-auto px-6 pb-4">
-          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+        <div className="container mx-auto px-6 pb-4 pr-12 md:pr-16 lg:pr-64">
+          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto  ">
             <div>
               <div className="mb-6 flex">
                 <div className="rounded-3xl bg-blue-50 p-3">
