@@ -11,7 +11,7 @@ export default async function Home() {
     <main dir="rtl" className="min-h-screen bg-white">
       <HeroSectionWithPwnedForm />
       {/* Arabic Features Section */}
-      <div className="py-16">
+      {/* <div className="py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-12">
             <h2
@@ -60,7 +60,7 @@ export default async function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="mb-4 text-2xl lg:text-4xl font-bold text-foreground">
+              <h3 className="mb-4 text-2xl lg:text-2xl font-bold text-foreground">
                 آمن وخاص
               </h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -154,7 +154,7 @@ export default async function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <BlogShowSection blogs={allBlogs} />
       <Footer />
