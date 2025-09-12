@@ -93,9 +93,9 @@ export function HeroSectionWithPwnedForm() {
                   placeholder="أدخل بريدك الإلكتروني"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-lg px-4 py-4 bg-white backdrop-blur-sm border border-white/30 text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent text-right"
+                  className="rounded-lg px-4 py-3 bg-white backdrop-blur-sm border border-white/30 text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent text-right"
                 />
-                <Button type="submit" disabled={loading} className="w-full text-xl py-8 ">
+                <Button type="submit" disabled={loading} className="w-full text-xl py-5 ">
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
                 </Button>
               </form>
