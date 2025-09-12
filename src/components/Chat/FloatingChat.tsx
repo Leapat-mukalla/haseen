@@ -1,8 +1,11 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { ChatContainer } from '@/components/Chat/ChatContainer';
+
+import { Bot, MessageCircle } from "lucide-react";
+import { useEffect, useRef, useState } from 'react';
+
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
-import { Bot } from "lucide-react";
+import { ChatContainer } from '@/components/Chat/ChatContainer';
+import { RippleIcon } from '@/components/RippleIcon';
 
 const prefilledQuestions = [
   "ما هي أفضل الطرق لحماية حساباتي على الإنترنت؟",
@@ -62,13 +65,19 @@ export function FloatingChat() {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex  items-center gap-3">
         <button
-          className="hover:bg-custom-gradient bg-primary text-white rounded-full p-4 shadow-lg transition-colors relative z-20"
+          className="hover:bg-custom-gradient cursor-pointer  text-white rounded-full p-2 shadow-lg transition-colors relative z-20 group"
           onClick={() => setOpen(prev => !prev)}
           aria-label="Open chat"
         >
-          <Bot className="w-7 h-7" />
+          <RippleIcon 
+            icon={Bot}
+            hoverIcon={MessageCircle}
+            size={28}
+            tooltip="تحدث مع خبير الأمن السيبراني"
+            tooltipPosition="left"
+          />
         </button>
         {showTooltip && (
           <div className="max-w-[75vw] sm:max-w-xs md:max-w-sm whitespace-normal break-words px-4 py-2 rounded-3xl rounded-tr-none rounded-br-none shadow-lg animate-fade-in bg-blue-50 text-primary mr-[-30px] relative z-10">
