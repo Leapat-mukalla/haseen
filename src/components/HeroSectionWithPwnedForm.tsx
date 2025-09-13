@@ -5,9 +5,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import HeroSvg from "@/components/HeroSvg";
 import Image from "next/image";
-
 import { ResponsiveHeader } from "@/components/responsive-header";
-
+import { XCircle } from "lucide-react";
 
 export function HeroSectionWithPwnedForm() {
   const [email, setEmail] = useState("");
@@ -65,7 +64,7 @@ export function HeroSectionWithPwnedForm() {
       <ResponsiveHeader />
       <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
-        <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-12 pb-32 lg:pt-24 lg:pb-24 2xl:pt-24 2xl:pb-24 relative z-10">
+        <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-44 pb-32 lg:pt-44 lg:pb-24 2xl:pt-44 2xl:pb-24 relative z-10">
             {/* Description Text */}
           <div className="max-w-4xl mx-auto mt-12 px-4">
             <p className="text-white/80 text-xl leading-relaxed text-right">
@@ -86,14 +85,26 @@ export function HeroSectionWithPwnedForm() {
             </div>
             <div className="p-6 pt-0 ">
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input
-                  type="email"
-                  required
-                  placeholder="أدخل بريدك الإلكتروني"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-lg px-4 py-3 bg-white backdrop-blur-sm border border-white/30 text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent text-right"
-                />
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    placeholder="أدخل بريدك الإلكتروني"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="rounded-lg px-4 py-3 w-full bg-white backdrop-blur-sm border border-white/30 text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent text-right"
+                  />
+                  {email && (
+                    <button
+                      type="button"
+                      onClick={() => setEmail("")}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                      aria-label="Clear input"
+                    >
+                      <XCircle size={20} />
+                    </button>
+                  )}
+                </div>
                 <Button type="submit" disabled={loading} className="w-full text-xl py-5 ">
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
                 </Button>
