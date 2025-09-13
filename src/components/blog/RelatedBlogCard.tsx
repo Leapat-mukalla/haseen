@@ -1,6 +1,8 @@
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/posthog";
+import { EVENTS } from "@/lib/events";
 
 interface RelatedBlogCardProps {
   data: {
@@ -23,6 +25,10 @@ export default function RelatedBlogCard({
   filePath,
 }: RelatedBlogCardProps) {
   const url = `/blog/posts/${filePath}`;
+
+   const handleReadMore = () => {
+    trackEvent(EVENTS.READ_MORE_ARTICLE, { title: data.title, url });
+  };
 
   return (
     <div className="group overflow-hidden rounded-tl-3xl rounded-tr-3xl border-b border-gray-200 bg-white pb-6 duration-300 last:border-b-0 hover:shadow-sm">
@@ -50,7 +56,7 @@ export default function RelatedBlogCard({
         </div>
 
         <h2 className="mb-3 line-clamp-2 text-lg font-bold text-gray-900">
-          <Link href={url} className="transition-colors hover:text-blue-600">
+          <Link href={url} className="transition-colors hover:text-blue-600" onClick={handleReadMore}>
             {data.title}
           </Link>
         </h2>
@@ -62,6 +68,7 @@ export default function RelatedBlogCard({
         <Link
           href={url}
           className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 transition-colors hover:text-blue-800"
+          onClick={handleReadMore}
         >
           أكمل القراءة
           <ChevronLeft className="h-4 w-4" />

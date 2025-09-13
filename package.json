@@ -21,6 +21,7 @@
     "nanoid": "^5.0.6",
     "next": "15.5.2",
     "openai": "^4.28.0",
+    "posthog-js": "^1.265.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",

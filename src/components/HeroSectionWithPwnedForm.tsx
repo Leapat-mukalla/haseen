@@ -7,6 +7,8 @@ import HeroSvg from "@/components/HeroSvg";
 import Image from "next/image";
 import { ResponsiveHeader } from "@/components/responsive-header";
 import { XCircle } from "lucide-react";
+import { trackEvent } from "@/lib/posthog";
+import { EVENTS } from "@/lib/events";
 
 export function HeroSectionWithPwnedForm() {
   const [email, setEmail] = useState("");
@@ -23,6 +25,9 @@ export function HeroSectionWithPwnedForm() {
     setError(null);
     setResult(null);
     setSecurityRecommendations(null);
+
+    trackEvent(EVENTS.CLICK_VERIFY, { email: email });
+
     try {
       const res = await fetch("/api/check-breach", {
         method: "POST",
@@ -38,6 +43,8 @@ export function HeroSectionWithPwnedForm() {
         if (data.success) {
           // No breaches found - show as success (green)
           setResult(data.message);
+
+          trackEvent(EVENTS.VERIFY_SUCCESS, { email: email });
         } else if (data.message) {
           // Breaches found - show as error (red) but with the specific breach message
           setError(data.message);
@@ -45,15 +52,20 @@ export function HeroSectionWithPwnedForm() {
           if (data.securityRecommendations) {
             setSecurityRecommendations(data.securityRecommendations);
           }
+
+          trackEvent(EVENTS.VERIFY_FAIL, { email: email });
         } else {
           // Fallback for other cases
           setError(data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.");
+          trackEvent(EVENTS.VERIFY_ERROR);
         }
       } else {
         setError(data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.");
+        trackEvent(EVENTS.VERIFY_ERROR, { email: email });
       }
     } catch (err) {
       setError("خطأ في الشبكة. يرجى المحاولة مرة أخرى.");
+      trackEvent(EVENTS.VERIFY_ERROR);
     } finally {
       setLoading(false);
     }
@@ -65,7 +77,7 @@ export function HeroSectionWithPwnedForm() {
       <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
         <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-44 pb-32 lg:pt-44 lg:pb-24 2xl:pt-44 2xl:pb-24 relative z-10">
-            {/* Description Text */}
+          {/* Description Text */}
           <div className="max-w-4xl mx-auto mt-12 px-4">
             <p className="text-white/80 text-xl leading-relaxed text-right">
               <span className="font-bold">حصين</span> أداة متقدمة تساعدك على
@@ -81,7 +93,8 @@ export function HeroSectionWithPwnedForm() {
                 هل تم اختراق بريدك الإلكتروني؟
               </div>
               <div className="text-lg w-2/3 mx-auto text-[#EAE9E8] text-center pt-4 pb-3">
-أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.              </div>
+                أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.{" "}
+              </div>
             </div>
             <div className="p-6 pt-0 ">
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -105,7 +118,11 @@ export function HeroSectionWithPwnedForm() {
                     </button>
                   )}
                 </div>
-                <Button type="submit" disabled={loading} className="w-full text-xl py-5 ">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full text-xl py-5 "
+                >
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
                 </Button>
               </form>
@@ -138,8 +155,6 @@ export function HeroSectionWithPwnedForm() {
               )}
             </div>
           </div>
-
-        
         </div>
 
         <div className="container mx-auto px-6 pb-4 pr-12 md:pr-16 lg:pr-64">
@@ -233,7 +248,8 @@ export function HeroSectionWithPwnedForm() {
                 نتائج فورية
               </h3>
               <p className="text-white leading-relaxed w-3/4">
-               احصل على نتائج التسريب في ثوانٍ من قاعدة بياناتنا الشاملة للتسريبات المعروفة.
+                احصل على نتائج التسريب في ثوانٍ من قاعدة بياناتنا الشاملة
+                للتسريبات المعروفة.
               </p>
             </div>
 
@@ -269,7 +285,6 @@ export function HeroSectionWithPwnedForm() {
             </div>
           </div>
         </div>
-        
       </section>
     </>
   );
