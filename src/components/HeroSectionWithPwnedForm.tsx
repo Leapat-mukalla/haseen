@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Header } from "@/components/Header";
 import HeroSvg from "@/components/HeroSvg";
 import Image from "next/image";
+
+import { ResponsiveHeader } from "@/components/responsive-header";
+
 
 export function HeroSectionWithPwnedForm() {
   const [email, setEmail] = useState("");
@@ -60,11 +62,9 @@ export function HeroSectionWithPwnedForm() {
 
   return (
     <>
-      <Header />
+      <ResponsiveHeader />
       <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
-
-        
         <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-12 pb-32 lg:pt-24 lg:pb-24 2xl:pt-24 2xl:pb-24 relative z-10">
             {/* Description Text */}
           <div className="max-w-4xl mx-auto mt-12 px-4">
@@ -77,7 +77,6 @@ export function HeroSectionWithPwnedForm() {
             </p>
           </div>
           <div className="max-w-2xl w-full mt-8 backdrop-blur-md bg-white/5 border border-white/20 rounded-lg shadow-lg">
-            
             <div className="flex flex-col space-y-1.5 p-6">
               <div className="text-2xl font-semibold leading-none tracking-tight text-white text-center ">
                 هل تم اختراق بريدك الإلكتروني؟
