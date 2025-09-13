@@ -1,6 +1,10 @@
+'use client';
+
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/posthog";
+import { EVENTS } from "@/lib/events";
 
 interface BlogCardProps {
   data: {
@@ -20,6 +24,11 @@ function formatDate(dateString: string) {
 
 export default function BlogCard({ data, filePath }: BlogCardProps) {
   const url = `/blog/posts/${filePath}`;
+
+   const handleReadMore = () => {
+    trackEvent(EVENTS.READ_MORE_ARTICLE, { title: data.title, url });
+  };
+
   return (
     <div className="group overflow-hidden  rounded-tr-3xl rounded-tl-3xl bg-white duration-300 hover:shadow-sm">
       <div className="relative h-48 w-full overflow-hidden">
@@ -31,7 +40,7 @@ export default function BlogCard({ data, filePath }: BlogCardProps) {
         />
       </div>
 
-        <div className="p-6" dir="rtl">
+      <div className="p-6" dir="rtl">
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-gray-200"></div>
@@ -49,6 +58,7 @@ export default function BlogCard({ data, filePath }: BlogCardProps) {
           <Link
             href={url}
             className="transition-colors hover:text-blue-600"
+            onClick={handleReadMore}
           >
             {data.title}
           </Link>
@@ -61,6 +71,7 @@ export default function BlogCard({ data, filePath }: BlogCardProps) {
         <Link
           href={url}
           className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 transition-colors hover:text-blue-800"
+          onClick={handleReadMore}
         >
           أكمل القراءة
           <ChevronLeft className="h-4 w-4" />

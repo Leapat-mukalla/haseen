@@ -1,11 +1,13 @@
-'use client';
+"use client";
 
 import { Bot, MessageCircle } from "lucide-react";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
-import { ChatContainer } from '@/components/Chat/ChatContainer';
-import { RippleIcon } from '@/components/RippleIcon';
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { ChatContainer } from "@/components/Chat/ChatContainer";
+import { RippleIcon } from "@/components/RippleIcon";
+import { trackEvent } from "@/lib/posthog";
+import { EVENTS } from "@/lib/events";
 
 const prefilledQuestions = [
   "ما هي أفضل الطرق لحماية حساباتي على الإنترنت؟",
@@ -26,11 +28,12 @@ export function FloatingChat() {
   // Handle mounting and tooltip effect
   useEffect(() => {
     setMounted(true);
-    
-    if (typeof window !== 'undefined') {
+
+    if (typeof window !== "undefined") {
       // Handle tooltip timing
       const showTimer = setTimeout(() => {
         setShowTooltip(true);
+        trackEvent(EVENTS.OPEN_CHAT);
       }, 3000);
 
       const hideTimer = setTimeout(() => {
@@ -48,6 +51,10 @@ export function FloatingChat() {
     setOpen(true);
     setPrefill(question);
     setShowSuggestions(false);
+
+    // Track the question sent
+    trackEvent(EVENTS.SEND_QUESTION, { question });
+
     setTimeout(() => {
       const textarea = chatPanelRef.current?.querySelector(
         "textarea"
@@ -68,10 +75,10 @@ export function FloatingChat() {
       <div className="fixed bottom-6 right-6 z-50 flex  items-center gap-3">
         <button
           className="hover:bg-custom-gradient cursor-pointer  text-white rounded-full p-2 shadow-lg transition-colors relative z-20 group"
-          onClick={() => setOpen(prev => !prev)}
+          onClick={() => setOpen((prev) => !prev)}
           aria-label="Open chat"
         >
-          <RippleIcon 
+          <RippleIcon
             icon={Bot}
             hoverIcon={MessageCircle}
             size={28}
@@ -81,7 +88,9 @@ export function FloatingChat() {
         </button>
         {showTooltip && (
           <div className="max-w-[75vw] sm:max-w-xs md:max-w-sm whitespace-normal break-words px-4 py-2 rounded-3xl rounded-tr-none rounded-br-none shadow-lg animate-fade-in bg-blue-50 text-primary mr-[-30px] relative z-10">
-            <div className="pr-4 text-sm sm:text-base leading-snug">مرحباً 👋🏻 أنا هنا لمساعدتك، تفضل بطرح سؤالك</div>
+            <div className="pr-4 text-sm sm:text-base leading-snug">
+              مرحباً 👋🏻 أنا هنا لمساعدتك، تفضل بطرح سؤالك
+            </div>
           </div>
         )}
       </div>
