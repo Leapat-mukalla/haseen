@@ -1,0 +1,35 @@
+{
+  "name": "حصين - أداة فحص تسريب البيانات",
+  "short_name": "حصين",
+  "description": "أداة متقدمة وآمنة للتحقق من تسريب البيانات الشخصية مع ضمان الخصوصية الكاملة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1542D4",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["security", "utilities", "privacy"],
+  "orientation": "portrait-primary"
+}

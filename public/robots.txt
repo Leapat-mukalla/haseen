@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+
+# Optimize crawl budget
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://haseen.leapat.org/sitemap.xml

@@ -17,7 +17,7 @@ export function ResponsiveHeader() {
 
   return (
     <div
-      className={cn("fixed top-24 z-20 w-full", {
+      className={cn("fixed top-12 z-20 w-full", {
         "top-0 bg-white/60 py-4 backdrop-blur-[15px]": scrolled,
       })}
     >

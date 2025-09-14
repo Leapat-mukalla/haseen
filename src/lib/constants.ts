@@ -6,7 +6,7 @@ export const links = [
   {
     id: 2,
     title: "من نحن؟",
-    url: "http://leapat.org/about",
+    url: "http://leapat.org/#about",
   },
   {
     title: "المشاريع",

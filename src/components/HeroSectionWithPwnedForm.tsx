@@ -65,14 +65,14 @@ export function HeroSectionWithPwnedForm() {
       <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
         <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-44 pb-32 lg:pt-44 lg:pb-24 2xl:pt-44 2xl:pb-24 relative z-10">
-            {/* Description Text */}
+          {/* Description Text */}
           <div className="max-w-4xl mx-auto mt-12 px-4">
-            <p className="text-white/80 text-xl leading-relaxed text-right">
-              <span className="font-bold">حصين</span> أداة متقدمة تساعدك على
-              التحقق مما إذا كان بريدك الإلكتروني أو اسم المستخدم أو رقم هاتفك
-              قد ظهر ضمن أي تسريب بيانات سابق، مع ضمان خصوصيتك الكاملة وحماية
-              معلوماتك من التخزين أو المشاركة، لتبقى مطمئنًا أن بياناتك تحت
-              سيطرتك دائمًا.
+            <p className="text-white/80 text-xl text-justify leading-relaxed pb-6">
+              <span className="font-bold text-2xl">حصين</span> أداة متقدمة
+              تساعدك على التحقق مما إذا كان بريدك الإلكتروني أو اسم المستخدم أو
+              رقم هاتفك قد ظهر ضمن أي تسريب بيانات سابق، مع ضمان خصوصيتك الكاملة
+              وحماية معلوماتك من التخزين أو المشاركة، لتبقى مطمئنًا أن بياناتك
+              تحت سيطرتك دائمًا.
             </p>
           </div>
           <div className="max-w-2xl w-full mt-8 backdrop-blur-md bg-white/5 border border-white/20 rounded-lg shadow-lg">
@@ -81,7 +81,8 @@ export function HeroSectionWithPwnedForm() {
                 هل تم اختراق بريدك الإلكتروني؟
               </div>
               <div className="text-lg w-2/3 mx-auto text-[#EAE9E8] text-center pt-4 pb-3">
-أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.              </div>
+                أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.{" "}
+              </div>
             </div>
             <div className="p-6 pt-0 ">
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -105,7 +106,11 @@ export function HeroSectionWithPwnedForm() {
                     </button>
                   )}
                 </div>
-                <Button type="submit" disabled={loading} className="w-full text-xl py-5 ">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full text-xl py-5 "
+                >
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
                 </Button>
               </form>
@@ -138,11 +143,9 @@ export function HeroSectionWithPwnedForm() {
               )}
             </div>
           </div>
-
-        
         </div>
 
-        <div className="container mx-auto px-6 pb-4 pr-12 md:pr-16 lg:pr-64">
+        <div className="container relative z-10 pb-24 mx-auto px-6 pr-12 md:pr-16 lg:pr-64">
           <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto  ">
             <div>
               <div className="mb-6 flex">
@@ -233,7 +236,8 @@ export function HeroSectionWithPwnedForm() {
                 نتائج فورية
               </h3>
               <p className="text-white leading-relaxed w-3/4">
-               احصل على نتائج التسريب في ثوانٍ من قاعدة بياناتنا الشاملة للتسريبات المعروفة.
+                احصل على نتائج التسريب في ثوانٍ من قاعدة بياناتنا الشاملة
+                للتسريبات المعروفة.
               </p>
             </div>
 
@@ -269,7 +273,6 @@ export function HeroSectionWithPwnedForm() {
             </div>
           </div>
         </div>
-        
       </section>
     </>
   );
