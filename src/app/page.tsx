@@ -55,7 +55,7 @@ export default async function Home() {
             الاتحاد الأوروبي.
           </p>
         </div>
-        <div className="mt-6 flex flex-wrap gap-10">
+        <div className="mt-6 flex flex-wrap justify-center gap-10">
           {[
             "/haseen_partners/amen.png",
             "/haseen_partners/takamol.png",
