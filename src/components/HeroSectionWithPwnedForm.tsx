@@ -143,17 +143,17 @@ export function HeroSectionWithPwnedForm() {
               تحت سيطرتك دائمًا.
             </p>
           </div>
-          <div className="max-w-2xl w-full mt-8 backdrop-blur-md bg-white/5 border border-white/20 rounded-lg shadow-lg">
-            <div className="flex flex-col space-y-1.5 p-6">
-              <div className="text-2xl font-semibold leading-none tracking-tight text-white text-center ">
+          <div className="max-w-2xl w-full mt-8 backdrop-blur-md bg-gray-900/90 border border-gray-700/50 rounded-2xl shadow-2xl">
+            <div className="flex flex-col space-y-1.5 p-8">
+              <div className="text-3xl font-bold leading-none tracking-tight text-white text-center mb-2">
                 هل تم اختراق بريدك الإلكتروني؟
               </div>
-              <div className="text-lg w-2/3 mx-auto text-[#EAE9E8] text-center pt-4 pb-3">
-                أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.{" "}
+              <div className="text-lg text-gray-300 text-center pt-2 pb-6">
+                أدخل بريدك الإلكتروني للتحقق من ظهوره في أي اختراق بيانات.
               </div>
             </div>
-            <div className="p-6 pt-0 ">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="p-8 pt-0">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="relative">
                   <input
                     type="email"
@@ -161,10 +161,10 @@ export function HeroSectionWithPwnedForm() {
                     placeholder="أدخل بريدك الإلكتروني"
                     value={email}
                     onChange={handleEmailChange}
-                    className={`rounded-lg px-4 py-3 w-full bg-white backdrop-blur-sm border text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent text-right ${
+                    className={`rounded-xl px-6 py-4 w-full bg-gray-100 border-0 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right text-lg ${
                       emailError
                         ? "border-red-400 focus:ring-red-400/50"
-                        : "border-white/30 focus:ring-blue-400/50"
+                        : "focus:ring-blue-500"
                     }`}
                   />
                   {email && (
@@ -174,10 +174,10 @@ export function HeroSectionWithPwnedForm() {
                         setEmail("");
                         setEmailError(null);
                       }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                       aria-label="Clear input"
                     >
-                      <XCircle size={20} />
+                      <XCircle size={24} />
                     </button>
                   )}
                 </div>
@@ -189,7 +189,7 @@ export function HeroSectionWithPwnedForm() {
                 <Button
                   type="submit"
                   disabled={loading || !!emailError || !email.trim()}
-                  className="w-full text-xl py-5 "
+                  className="w-full text-xl py-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl border-0 transition-all duration-200"
                 >
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
                 </Button>
@@ -198,21 +198,26 @@ export function HeroSectionWithPwnedForm() {
                 <div className="mt-4 text-green-400 text-right">{result}</div>
               )}
               {error && (
-                <div className="mt-4 p-4 bg-red-500/20 border border-red-400/30 rounded-lg backdrop-blur-sm">
-                  <div className="text-red-400 text-right font-semibold mb-3">
-                    {error}
+                <div className="mt-6 p-6 bg-gray-800/90 border border-gray-700/50 rounded-xl backdrop-blur-sm">
+                  <div className="text-red-400 text-right font-bold text-lg mb-4">
+                    للأسف! {error}
                   </div>
                   {securityRecommendations && (
-                    <div>
-                      <h3 className="text-red-300 font-semibold text-right mb-3">
+                    <div className="mb-6">
+                      <h3 className="text-white font-bold text-right mb-4">
                         إرشادات الأمان:
                       </h3>
-                      <ul className="space-y-2 text-red-200 text-right">
+                      <ul className="space-y-3 text-white text-right">
                         {securityRecommendations.map(
                           (recommendation, index) => (
-                            <li key={index} className="flex items-center gap-2">
-                              <span className="text-red-300">✓</span>
-                              <span>{recommendation}</span>
+                            <li
+                              key={index}
+                              className="flex items-start gap-3 text-right"
+                            >
+                              <span className="text-green-400 text-xl mt-0.5">
+                                ✓
+                              </span>
+                              <span className="flex-1">{recommendation}</span>
                             </li>
                           )
                         )}
@@ -220,54 +225,14 @@ export function HeroSectionWithPwnedForm() {
                     </div>
                   )}
                   {breaches && breaches.length > 0 && (
-                    <div className="mt-6">
-                      <h3 className="text-red-300 font-semibold text-right mb-3">
-                        آخر {Math.min(breaches.length, 5)} اختراقات:
-                      </h3>
+                    <div>
                       <div className="space-y-3">
                         {breaches.slice(0, 5).map((breach, index) => (
-                          <div
-                            key={index}
-                            className="bg-red-600/20 border border-red-500/30 rounded-lg p-3 backdrop-blur-sm"
-                          >
-                            <div className="flex justify-between items-start mb-2">
-                              <div className="text-right flex-1">
-                                <h4 className="text-red-200 font-semibold text-lg">
-                                  {breach.Name}
-                                </h4>
-                                <p className="text-red-300 text-sm mt-1">
-                                  {formatBreachDate(breach.BreachDate)}
-                                </p>
-                              </div>
+                          <div key={index} className="text-right">
+                            <div className="text-red-400 font-semibold">
+                              {breach.Name} -{" "}
+                              {formatBreachDate(breach.BreachDate)}
                             </div>
-                            <p className="text-red-200 text-sm text-right leading-relaxed">
-                              {breach.Description}
-                            </p>
-                            {breach.DataClasses &&
-                              breach.DataClasses.length > 0 && (
-                                <div className="mt-2">
-                                  <p className="text-red-300 text-xs text-right mb-1">
-                                    البيانات المتأثرة:
-                                  </p>
-                                  <div className="flex flex-wrap gap-1 justify-end">
-                                    {breach.DataClasses.slice(0, 5).map(
-                                      (dataClass: string, idx: number) => (
-                                        <span
-                                          key={idx}
-                                          className="bg-red-700/30 text-red-200 text-xs px-2 py-1 rounded"
-                                        >
-                                          {dataClass}
-                                        </span>
-                                      )
-                                    )}
-                                    {breach.DataClasses.length > 5 && (
-                                      <span className="text-red-300 text-xs">
-                                        +{breach.DataClasses.length - 5} أخرى
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
                           </div>
                         ))}
                       </div>
