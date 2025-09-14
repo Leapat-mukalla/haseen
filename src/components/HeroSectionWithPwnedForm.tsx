@@ -88,7 +88,7 @@ export function HeroSectionWithPwnedForm() {
     setBreaches(null);
 
     try {
-      const res = await fetch("/api/check-breach?truncateResponse=false	", {
+      const res = await fetch("/api/check-breach?truncateResponse=false", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -202,8 +202,21 @@ export function HeroSectionWithPwnedForm() {
                   <div className="text-red-400 text-right font-bold text-lg mb-4">
                     للأسف! {error}
                   </div>
-                  {securityRecommendations && (
+                  {breaches && breaches.length > 0 && (
                     <div className="mb-6">
+                      <div className="space-y-3">
+                        {breaches.slice(0, 5).map((breach, index) => (
+                          <div key={index} className="text-right">
+                            <div className="text-red-400 font-semibold">
+                              {breach.Name}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {securityRecommendations && (
+                    <div>
                       <h3 className="text-white font-bold text-right mb-4">
                         إرشادات الأمان:
                       </h3>
@@ -222,20 +235,6 @@ export function HeroSectionWithPwnedForm() {
                           )
                         )}
                       </ul>
-                    </div>
-                  )}
-                  {breaches && breaches.length > 0 && (
-                    <div>
-                      <div className="space-y-3">
-                        {breaches.slice(0, 5).map((breach, index) => (
-                          <div key={index} className="text-right">
-                            <div className="text-red-400 font-semibold">
-                              {breach.Name} -{" "}
-                              {formatBreachDate(breach.BreachDate)}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   )}
                 </div>
