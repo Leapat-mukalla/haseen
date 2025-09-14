@@ -3,23 +3,24 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import { Search } from "lucide-react";
 
 export default function BlogSearchForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
-  
+
   const currentSearch = searchParams.get("search") || "";
   const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || "",
+    searchParams.get("search") || ""
   );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (searchQuery.trim()) {
-      params.set("search", searchQuery.trim());
+      startTransition(() => {
+        params.set("search", searchQuery.trim());
+      });
     }
     router.push(`/blog?${params.toString()}`);
   };
@@ -33,7 +34,6 @@ export default function BlogSearchForm() {
         <input
           className="w-full outline-none"
           placeholder="ابحث عن مقالة"
-          
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

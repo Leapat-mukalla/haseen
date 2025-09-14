@@ -2,8 +2,6 @@
 
 import { HeaderDesktop } from "./header-desktop";
 import { HeaderMobile } from "./header-mobile";
-import Image from "next/image";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import useScroll from "@/hooks/use-scroll";
 import useWidth from "@/hooks/use-width";

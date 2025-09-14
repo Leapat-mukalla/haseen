@@ -32,15 +32,6 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     .filter((b) => b.filePath !== resolvedParams.id)
     .slice(0, 3);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("ar-SA", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   return (
     <div className="min-h-screen">
       <HeroSectionWithPwnedForm />

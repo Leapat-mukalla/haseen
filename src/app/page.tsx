@@ -57,11 +57,11 @@ export default async function Home() {
         </div>
         <div className="mt-6 flex flex-wrap gap-10">
           {[
-            "/haseen_partners/Amen.png",
-            "/haseen_partners/Takamol.png",
-            "/haseen_partners/Adalah_Foundation.png",
-            "/haseen_partners/Saferworld.png",
-            "/haseen_partners/EN_FundedbytheEU_RGB_POS.png",
+            "/haseen_partners/amen.png",
+            "/haseen_partners/takamol.png",
+            "/haseen_partners/adalah_foundation.png",
+            "/haseen_partners/saferworld.png",
+            "/haseen_partners/en_fundedbytheeu_rgb_pos.png",
           ].map((logo: string, idx: number) => (
             <div className="relative h-18 w-44" key={idx}>
               <Image

@@ -33,7 +33,10 @@ export function HeaderMobile() {
           <Button
             variant="ghost"
             size="icon"
-            className={cn("rounded-full text-white", scrolled && "text-[#171717]")}
+            className={cn(
+              "rounded-full text-white",
+              scrolled && "text-[#171717]"
+            )}
           >
             <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Toggle navigation menu</span>
@@ -45,20 +48,6 @@ export function HeaderMobile() {
           </SheetHeader>
           <div className="grid gap-4">
             {links.map((link, index) => {
-              // Skip dropdown items
-              if (link.hasDropdown && link.dropdownItems) {
-                return link.dropdownItems.map((item, subIndex) => (
-                  <Link
-                    key={`${index}-${subIndex}`}
-                    href={item.url}
-                    className="flex items-center gap-3 rounded-md px-3 py-2 text-lg font-medium text-foreground hover:bg-muted/50 text-right"
-                    prefetch={false}
-                  >
-                    {item.title}
-                  </Link>
-                ));
-              }
-              
               return (
                 <Link
                   key={index}

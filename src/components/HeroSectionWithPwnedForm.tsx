@@ -7,6 +7,27 @@ import HeroSvg from "@/components/HeroSvg";
 import { ResponsiveHeader } from "@/components/responsive-header";
 import { XCircle } from "lucide-react";
 
+type Breach = {
+  Name: string;
+  Title: string;
+  Domain: string;
+  BreachDate: string;
+  AddedDate: string;
+  ModifiedDate: string;
+  PwnCount: number;
+  Description: string;
+  LogoPath: string;
+  DataClasses: string[];
+  IsVerified: boolean;
+  IsFabricated: boolean;
+  IsSensitive: boolean;
+  IsRetired: boolean;
+  IsSpamList: boolean;
+  IsMalware: boolean;
+  IsStealerLog: boolean;
+  IsSubscriptionFree: boolean;
+};
+
 export function HeroSectionWithPwnedForm() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState<null | string>(null);
@@ -16,7 +37,7 @@ export function HeroSectionWithPwnedForm() {
   const [securityRecommendations, setSecurityRecommendations] = useState<
     string[] | null
   >(null);
-  const [breaches, setBreaches] = useState<any[] | null>(null);
+  const [breaches, setBreaches] = useState<Breach[] | null>(null);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -99,7 +120,7 @@ export function HeroSectionWithPwnedForm() {
       } else {
         setError(data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.");
       }
-    } catch (err) {
+    } catch {
       setError("خطأ في الشبكة. يرجى المحاولة مرة أخرى.");
     } finally {
       setLoading(false);

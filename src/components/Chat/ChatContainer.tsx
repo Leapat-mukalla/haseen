@@ -1,24 +1,23 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-const SUGGESTED_QUESTIONS = [
-  'ما هي أفضل الطرق لحماية حساباتي على الإنترنت؟',
-  'كيف أتعامل مع رسالة بريد إلكتروني مشبوهة؟',
-  'ما معنى التصيد الإلكتروني؟',
-  'ماذا أفعل إذا تم اختراق حسابي؟',
-  'كيف أحمي بياناتي الشخصية على الهاتف؟',
-];
-import { useChatStore } from '@/store/chatStore';
-import { ChatMessage } from './ChatMessage';
-import { TypingIndicator } from './TypingIndicator';
-import { ErrorMessage } from './ErrorMessage';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { useEffect, useRef, useState } from "react";
+import { useChatStore } from "@/store/chatStore";
+import { ChatMessage } from "./ChatMessage";
+import { TypingIndicator } from "./TypingIndicator";
+import { ErrorMessage } from "./ErrorMessage";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 export function ChatContainer() {
-  const { currentSession, sendMessage, createNewSession, isLoading, error, hydrateFromStorage, hasHydrated } = useChatStore();
+  const {
+    currentSession,
+    sendMessage,
+    isLoading,
+    error,
+    hydrateFromStorage,
+    hasHydrated,
+  } = useChatStore();
   const [lastMessage, setLastMessage] = useState<string>();
   const [inputLength, setInputLength] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(true);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   // Hydrate persisted sessions on client after mount
@@ -29,7 +28,7 @@ export function ChatContainer() {
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [currentSession?.messages]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,10 +39,9 @@ export function ChatContainer() {
 
     setLastMessage(content);
     if (inputElement) {
-      inputElement.value = '';
+      inputElement.value = "";
     }
     setInputLength(0);
-    setShowSuggestions(true);
     await sendMessage(content);
   };
 
@@ -54,7 +52,7 @@ export function ChatContainer() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
     }
@@ -89,14 +87,12 @@ export function ChatContainer() {
               rows={1}
               maxLength={1000}
               onKeyDown={handleKeyDown}
-              onFocus={() => setShowSuggestions(false)}
               onChange={(e) => {
                 const textarea = e.target;
                 textarea.style.height = "auto";
                 textarea.style.height =
                   Math.min(textarea.scrollHeight, 200) + "px";
                 setInputLength(textarea.value.length);
-                if (textarea.value.length > 0) setShowSuggestions(false);
               }}
               dir="rtl"
             />

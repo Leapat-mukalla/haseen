@@ -27,48 +27,6 @@ export function HeaderDesktop() {
           const isActive = !index
             ? isHome
             : pathname === link.url || pathname.startsWith(link.url);
-          
-          if (link.hasDropdown && link.dropdownItems) {
-            return (
-              <DropdownMenu key={index}>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className={cn(
-                      "flex items-center gap-1 text-base font-semibold leading-9 text-white/80 transition-colors hover:text-white",
-                      isActive && "border-b-2 border-white text-white",
-                      scrolled && "text-[#454545] hover:text-[#171717]",
-                      scrolled &&
-                        isActive &&
-                        "border-b-2 border-[#171717] text-[#171717]",
-                    )}
-                  >
-                    {link.title}
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="center"
-                  className="mt-2 w-64 border border-gray-200 bg-white shadow-lg"
-                >
-                  {link.dropdownItems.map((item, subIndex) => (
-                    <DropdownMenuItem key={subIndex} asChild>
-                      <Link
-                        href={item.url}
-                        className="flex cursor-pointer flex-col items-start p-3 transition-colors hover:bg-gray-50"
-                      >
-                        <span className="font-medium text-gray-900">
-                          {item.title}
-                        </span>
-                        <span className="mt-1 text-sm text-gray-500">
-                          {item.description}
-                        </span>
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          }
 
           return (
             <Link
