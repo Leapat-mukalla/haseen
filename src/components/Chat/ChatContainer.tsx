@@ -6,6 +6,7 @@ import { ChatMessage } from "./ChatMessage";
 import { TypingIndicator } from "./TypingIndicator";
 import { ErrorMessage } from "./ErrorMessage";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import { trackChatMessage } from "@/lib/analytics";
 
 export function ChatContainer() {
   const {
@@ -38,6 +39,10 @@ export function ChatContainer() {
     if (!content || isLoading) return;
 
     setLastMessage(content);
+
+    // Track chat message sending
+    trackChatMessage(content.length, false);
+
     if (inputElement) {
       inputElement.value = "";
     }

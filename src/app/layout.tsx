@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { FloatingChat } from "@/components/Chat/FloatingChat";
 import { generateMetadata, generateStructuredData } from "@/lib/seo";
 
@@ -77,6 +78,11 @@ export default function RootLayout({
         {children}
         <FloatingChat />
         <Footer />
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
     </html>
   );

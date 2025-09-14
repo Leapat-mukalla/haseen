@@ -5,6 +5,11 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import HeroSvg from "@/components/HeroSvg";
 import { XCircle } from "lucide-react";
+import {
+  trackHaseenFormSubmit,
+  trackHaseenFormSuccess,
+  trackHaseenFormError,
+} from "@/lib/analytics";
 
 type Breach = {
   Name: string;
@@ -86,6 +91,9 @@ export function HeroSectionWithPwnedForm() {
     setSecurityRecommendations(null);
     setBreaches(null);
 
+    // Track form submission
+    trackHaseenFormSubmit(email.trim());
+
     try {
       const res = await fetch("/api/check-breach?truncateResponse=false", {
         method: "POST",
@@ -101,9 +109,13 @@ export function HeroSectionWithPwnedForm() {
         if (data.success) {
           // No breaches found - show as success (green)
           setResult(data.message);
+          // Track successful form result (no breaches)
+          trackHaseenFormSuccess(0, email.trim());
         } else if (data.message) {
           // Breaches found - show as error (red) but with the specific breach message
           setError(data.message);
+          // Track successful form result (breaches found)
+          trackHaseenFormSuccess(data.breaches?.length || 1, email.trim());
           // Set security recommendations if available
           if (data.securityRecommendations) {
             setSecurityRecommendations(data.securityRecommendations);
@@ -114,13 +126,19 @@ export function HeroSectionWithPwnedForm() {
           }
         } else {
           // Fallback for other cases
-          setError(data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.");
+          const errorMessage = data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.";
+          setError(errorMessage);
+          trackHaseenFormError(errorMessage, email.trim());
         }
       } else {
-        setError(data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.");
+        const errorMessage = data.error || "حدث خطأ. يرجى المحاولة مرة أخرى.";
+        setError(errorMessage);
+        trackHaseenFormError(errorMessage, email.trim());
       }
     } catch {
-      setError("خطأ في الشبكة. يرجى المحاولة مرة أخرى.");
+      const errorMessage = "خطأ في الشبكة. يرجى المحاولة مرة أخرى.";
+      setError(errorMessage);
+      trackHaseenFormError(errorMessage, email.trim());
     } finally {
       setLoading(false);
     }

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { ChatContainer } from "@/components/Chat/ChatContainer";
 import { RippleIcon } from "@/components/RippleIcon";
+import { trackChatOpen, trackChatQuestionSelect } from "@/lib/analytics";
 
 const prefilledQuestions = [
   "ما هي أفضل الطرق لحماية حساباتي على الإنترنت؟",
@@ -47,6 +48,10 @@ export function FloatingChat() {
     setOpen(true);
     setPrefill(question);
     setShowSuggestions(false);
+
+    // Track prefilled question selection
+    trackChatQuestionSelect(question);
+
     setTimeout(() => {
       const textarea = chatPanelRef.current?.querySelector(
         "textarea"
@@ -67,7 +72,14 @@ export function FloatingChat() {
       <div className="fixed bottom-6 right-6 z-50 flex  items-center gap-3">
         <button
           className="hover:bg-custom-gradient cursor-pointer  text-white rounded-full p-2 shadow-lg transition-colors relative z-20 group"
-          onClick={() => setOpen((prev) => !prev)}
+          onClick={() => {
+            const newOpenState = !open;
+            setOpen(newOpenState);
+            // Track chat opening
+            if (newOpenState) {
+              trackChatOpen();
+            }
+          }}
           aria-label="Open chat"
         >
           <RippleIcon

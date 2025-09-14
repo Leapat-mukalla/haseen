@@ -14,6 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import PartenersSection from "@/components/parteners-section";
+import { BlogTracker } from "@/components/blog/BlogTracker";
 
 interface BlogDetailPageProps {
   params: Promise<{
@@ -44,6 +45,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
   return (
     <div className="min-h-screen">
+      {/* Blog tracking component */}
+      <BlogTracker blogTitle={blog.data.title} category="cyber_security" />
+
       <HeroSection
         showLogo={false}
         className="min-h-64"
