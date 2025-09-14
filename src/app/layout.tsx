@@ -4,6 +4,8 @@ import { FloatingChat } from "@/components/Chat/FloatingChat";
 import { generateMetadata, generateStructuredData } from "@/lib/seo";
 
 import "./globals.css";
+import Footer from "@/components/Footer";
+import { ResponsiveHeader } from "@/components/responsive-header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,8 +72,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ResponsiveHeader />
+
         {children}
         <FloatingChat />
+        <Footer />
       </body>
     </html>
   );

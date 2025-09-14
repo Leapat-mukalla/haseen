@@ -4,6 +4,16 @@ import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm"
 import React from "react";
 import RelatedBlogCard from "@/components/blog/RelatedBlogCard";
 import { notFound } from "next/navigation";
+import { HeroSection } from "@/components/hero-section";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import PartenersSection from "@/components/parteners-section";
 
 interface BlogDetailPageProps {
   params: Promise<{
@@ -34,7 +44,35 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
   return (
     <div className="min-h-screen">
-      <HeroSectionWithPwnedForm />
+      <HeroSection
+        showLogo={false}
+        className="min-h-64"
+        view="list"
+        title={blog.data.title}
+      >
+        <div className="flex flex-col gap-4">
+          {/* <h1 className="text-4xl font-bold">{blog.data.title}</h1> */}
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink className="hover:text-blue-600" href="/">
+                  الرئيسية
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink className="hover:text-blue-600" href="/blog">
+                  المقالات
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{blog.data.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </HeroSection>
 
       <div className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8">
@@ -83,6 +121,8 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           </div>
         </div>
       </div>
+
+      <PartenersSection />
     </div>
   );
 }

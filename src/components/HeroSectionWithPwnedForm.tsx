@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import HeroSvg from "@/components/HeroSvg";
-import { ResponsiveHeader } from "@/components/responsive-header";
 import { XCircle } from "lucide-react";
 
 type Breach = {
@@ -129,7 +128,6 @@ export function HeroSectionWithPwnedForm() {
 
   return (
     <>
-      <ResponsiveHeader />
       <section className="bg-custom-gradient overflow-hidden relative">
         <HeroSvg />
         <div className="container px-6 mx-auto flex flex-col items-center justify-center pt-44 pb-32 lg:pt-44 lg:pb-24 2xl:pt-44 2xl:pb-24 relative z-10">

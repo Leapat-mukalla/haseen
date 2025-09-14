@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { getBlogs } from "@/lib/markdown";
 import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
 import { Metadata } from "next";
+import { HeroSection } from "@/components/hero-section";
+import BlogSearchForm from "@/components/blog/BlogSearchForm";
 
 interface BlogPageProps {
   searchParams: Promise<{
@@ -75,20 +77,21 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           blog.data.author.toLowerCase().includes(searchQuery) ||
           blog.data.category.toLowerCase().includes(searchQuery) ||
           blog.data.tags.some((tag) =>
-            tag.toLowerCase().includes(searchQuery),
+            tag.toLowerCase().includes(searchQuery)
           ) ||
-          blog.content.toLowerCase().includes(searchQuery),
+          blog.content.toLowerCase().includes(searchQuery)
       )
     : allBlogs;
 
   return (
     <>
-      <HeroSectionWithPwnedForm />
-      {/* <BlogSearchForm /> */}
+      <HeroSection showLogo={false} view="list" title="المقالات">
+        {/* <BlogSearchForm /> */}
+      </HeroSection>
 
       <h2
         className={cn(
-          "mt-18 flex items-end justify-center gap-2 text-4xl text-primary",
+          "mt-18 flex items-end justify-center gap-2 text-4xl text-primary"
         )}
       >
         ثقف نفسك أكثر{" "}
