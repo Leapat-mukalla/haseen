@@ -17,23 +17,6 @@ export const links = [
     url: "http://leapat.org/blog",
   },
   {
-    title: "تطبيقاتنا",
-    url: "#",
-    hasDropdown: true,
-    dropdownItems: [
-      {
-        title: "حصين",
-        url: "/",
-        description: "أداة فحص تسريب البيانات",
-      },
-      // {
-      //   title: "تطبيق آخر",
-      //   url: "/app-two",
-      //   description: "وصف التطبيق الثاني",
-      // },
-    ],
-  },
-  {
     id: 6,
     title: "اتصل بنا",
     url: "http://leapat.org/contact",

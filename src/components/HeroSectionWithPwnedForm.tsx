@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import HeroSvg from "@/components/HeroSvg";
-import Image from "next/image";
 import { ResponsiveHeader } from "@/components/responsive-header";
 import { XCircle } from "lucide-react";
 
@@ -13,18 +12,62 @@ export function HeroSectionWithPwnedForm() {
   const [result, setResult] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [securityRecommendations, setSecurityRecommendations] = useState<
     string[] | null
   >(null);
+  const [breaches, setBreaches] = useState<any[] | null>(null);
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const formatBreachDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("ar-SA", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    // Clear previous errors when user starts typing
+    setError(null);
+    setEmailError(null);
+
+    // Real-time validation
+    if (value.trim() && !validateEmail(value.trim())) {
+      setEmailError("تنسيق البريد الإلكتروني غير صحيح");
+    }
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Email validation
+    if (!email.trim()) {
+      setError("يرجى إدخال بريد إلكتروني");
+      return;
+    }
+
+    if (!validateEmail(email.trim())) {
+      setError("يرجى إدخال بريد إلكتروني صحيح");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setResult(null);
     setSecurityRecommendations(null);
+    setBreaches(null);
+
     try {
-      const res = await fetch("/api/check-breach", {
+      const res = await fetch("/api/check-breach?truncateResponse=false	", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,6 +87,10 @@ export function HeroSectionWithPwnedForm() {
           // Set security recommendations if available
           if (data.securityRecommendations) {
             setSecurityRecommendations(data.securityRecommendations);
+          }
+          // Set breaches data if available
+          if (data.breaches) {
+            setBreaches(data.breaches);
           }
         } else {
           // Fallback for other cases
@@ -92,13 +139,20 @@ export function HeroSectionWithPwnedForm() {
                     required
                     placeholder="أدخل بريدك الإلكتروني"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="rounded-lg px-4 py-3 w-full bg-white backdrop-blur-sm border border-white/30 text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent text-right"
+                    onChange={handleEmailChange}
+                    className={`rounded-lg px-4 py-3 w-full bg-white backdrop-blur-sm border text-gray-500 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent text-right ${
+                      emailError
+                        ? "border-red-400 focus:ring-red-400/50"
+                        : "border-white/30 focus:ring-blue-400/50"
+                    }`}
                   />
                   {email && (
                     <button
                       type="button"
-                      onClick={() => setEmail("")}
+                      onClick={() => {
+                        setEmail("");
+                        setEmailError(null);
+                      }}
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                       aria-label="Clear input"
                     >
@@ -106,9 +160,14 @@ export function HeroSectionWithPwnedForm() {
                     </button>
                   )}
                 </div>
+                {emailError && (
+                  <div className="text-red-400 text-right text-sm mt-1">
+                    {emailError}
+                  </div>
+                )}
                 <Button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || !!emailError || !email.trim()}
                   className="w-full text-xl py-5 "
                 >
                   {loading ? "جاري التحقق..." : "تحقق الآن"}
@@ -137,6 +196,60 @@ export function HeroSectionWithPwnedForm() {
                           )
                         )}
                       </ul>
+                    </div>
+                  )}
+                  {breaches && breaches.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="text-red-300 font-semibold text-right mb-3">
+                        آخر {Math.min(breaches.length, 5)} اختراقات:
+                      </h3>
+                      <div className="space-y-3">
+                        {breaches.slice(0, 5).map((breach, index) => (
+                          <div
+                            key={index}
+                            className="bg-red-600/20 border border-red-500/30 rounded-lg p-3 backdrop-blur-sm"
+                          >
+                            <div className="flex justify-between items-start mb-2">
+                              <div className="text-right flex-1">
+                                <h4 className="text-red-200 font-semibold text-lg">
+                                  {breach.Name}
+                                </h4>
+                                <p className="text-red-300 text-sm mt-1">
+                                  {formatBreachDate(breach.BreachDate)}
+                                </p>
+                              </div>
+                            </div>
+                            <p className="text-red-200 text-sm text-right leading-relaxed">
+                              {breach.Description}
+                            </p>
+                            {breach.DataClasses &&
+                              breach.DataClasses.length > 0 && (
+                                <div className="mt-2">
+                                  <p className="text-red-300 text-xs text-right mb-1">
+                                    البيانات المتأثرة:
+                                  </p>
+                                  <div className="flex flex-wrap gap-1 justify-end">
+                                    {breach.DataClasses.slice(0, 5).map(
+                                      (dataClass: string, idx: number) => (
+                                        <span
+                                          key={idx}
+                                          className="bg-red-700/30 text-red-200 text-xs px-2 py-1 rounded"
+                                        >
+                                          {dataClass}
+                                        </span>
+                                      )
+                                    )}
+                                    {breach.DataClasses.length > 5 && (
+                                      <span className="text-red-300 text-xs">
+                                        +{breach.DataClasses.length - 5} أخرى
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
