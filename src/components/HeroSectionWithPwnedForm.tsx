@@ -153,8 +153,7 @@ export function HeroSectionWithPwnedForm() {
           <div className="max-w-4xl mx-auto mt-12 px-4">
             <p className="text-white/80 text-xl text-justify leading-relaxed pb-6">
               <span className="font-bold text-2xl">حصين</span> أداة متقدمة
-              تساعدك على التحقق مما إذا كان بريدك الإلكتروني أو اسم المستخدم أو
-              رقم هاتفك قد ظهر ضمن أي تسريب بيانات سابق، مع ضمان خصوصيتك الكاملة
+              تساعدك على التحقق مما إذا كان بريدك الإلكتروني قد ظهر ضمن أي تسريب بيانات سابق، مع ضمان خصوصيتك الكاملة
               وحماية معلوماتك من التخزين أو المشاركة، لتبقى مطمئنًا أن بياناتك
               تحت سيطرتك دائمًا.
             </p>
