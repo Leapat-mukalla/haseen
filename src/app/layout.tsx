@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { FloatingChat } from "@/components/Chat/FloatingChat";
 import { generateMetadata, generateStructuredData } from "@/lib/seo";
@@ -8,14 +8,10 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import { ResponsiveHeader } from "@/components/responsive-header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-sans",
+  subsets: ["arabic", "latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = generateMetadata();
@@ -70,9 +66,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${ibmPlexSansArabic.variable} antialiased`}>
         <ResponsiveHeader />
 
         {children}

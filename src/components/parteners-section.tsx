@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function PartenersSection() {
   return (
-    <section className="my-20 container mx-auto max-sm:mx-4">
+    <section className="container mx-auto">
       <div className="text-center mb-12">
         <h2
           className={cn(
@@ -19,7 +19,7 @@ export default function PartenersSection() {
           الاتحاد الأوروبي.
         </p>
       </div>
-      <div className="mt-6 flex flex-nowrap justify-center items-center gap-1 sm:gap-2 md:gap-4 w-full">
+      <div className="mt-6 grid grid-cols-5 gap-2 lg:gap-6 container mx-auto px-4">
         {[
           "/haseen_partners/amen.png",
           "/haseen_partners/takamol.png",
@@ -27,10 +27,7 @@ export default function PartenersSection() {
           "/haseen_partners/saferworld.png",
           "/haseen_partners/en_fundedbytheeu_rgb_pos.png",
         ].map((logo: string, idx: number) => (
-          <div
-            className="relative h-10 w-16 sm:h-12 sm:w-20 md:h-16 md:w-28 lg:h-20 lg:w-32 flex-1 max-w-[80px] sm:max-w-[100px] md:max-w-[120px] lg:max-w-[140px]"
-            key={idx}
-          >
+          <div className="relative aspect-video" key={idx}>
             <Image
               fill
               key={idx}

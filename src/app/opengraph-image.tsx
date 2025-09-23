@@ -23,7 +23,8 @@ export default async function Image() {
           alignItems: "center",
           justifyContent: "center",
           color: "white",
-          fontFamily: "Arial, sans-serif",
+          fontFamily:
+            "'Noto Sans Arabic', 'Arabic Typesetting', 'Tahoma', sans-serif",
         }}
       >
         <div
