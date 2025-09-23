@@ -1,7 +1,7 @@
 export const links = [
   {
     title: "الرئيسية",
-    url: "/",
+    url: "http://leapat.org/",
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const links = [
     url: "http://leapat.org/projects",
   },
   {
-    title: "المدونة",
+    title: "المقالات",
     url: "http://leapat.org/blog",
   },
   {
