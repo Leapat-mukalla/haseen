@@ -3,6 +3,7 @@ title: "هويتك الرقمية في خطر: كيف تحمي بياناتك و
 image: "/blog/digital-identity-protection.jpg"
 date: "2024-12-10"
 author: "فارس بن دهول"
+authorAvatar: "/blog/faris.jpeg"
 authorTitle: "خبير أمن سيبراني"
 category: "الأمن السيبراني"
 tags: ["الهوية الرقمية", "حماية البيانات", "الأمن السيبراني", "الخصوصية"]

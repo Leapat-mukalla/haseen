@@ -23,6 +23,7 @@ export type BlogMatter = {
     image: string;
     date: string;
     author: string;
+    authorAvatar: string;
     authorTitle: string;
     category: string;
     tags: string[];
@@ -58,7 +59,7 @@ export async function getProjects() {
 
   // Sort projects by creation date in descending order
   projects.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   );
 
   return projects;
@@ -75,6 +76,10 @@ export async function getBlogs() {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const { data, content } = fm(fileContent);
 
+    if (data.draft) {
+      continue; // Skip draft blogs
+    }
+
     if (!data.date) {
       throw new Error(`${data.title} should have date`);
     }
@@ -88,7 +93,7 @@ export async function getBlogs() {
   }
 
   blogs.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   );
 
   return blogs;
