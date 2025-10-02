@@ -1,12 +1,10 @@
 import BlogShowSection from "@/components/blog/BlogShowSection";
-import Footer from "@/components/Footer";
 import { HeroSectionWithPwnedForm } from "@/components/HeroSectionWithPwnedForm";
-import { cn } from "@/lib/utils";
 import { getBlogs } from "@/lib/markdown";
 import { generateMetadata } from "@/lib/seo";
 import { Metadata } from "next";
-import Image from "next/image";
 import PartenersSection from "@/components/parteners-section";
+import EmergencyContactsSection from "@/components/emergency-contacts-section";
 
 export const metadata: Metadata = generateMetadata({
   title: "فحص تسريب البيانات الشخصية - أداة حصين المجانية",
@@ -39,6 +37,8 @@ export default async function Home() {
       <HeroSectionWithPwnedForm />
 
       <BlogShowSection blogs={allBlogs} />
+
+      <EmergencyContactsSection />
 
       <PartenersSection />
     </main>
